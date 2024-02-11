@@ -8,27 +8,27 @@ class AVLTree(object):
     def create (self,data):
         return Node(data)
     
-    def insert(self, root, key):
-        if root is None:
-            return self.create(key)
-        elif key < root.data:
-            root.left = self.insert(root.left, key)
+    def insert(self, node, data):
+        if node is None:
+            return self.create(data)
+        elif data < node.data:
+            node.left = self.insert(node.left, data)
         else:
-            root.right = self.insert(root.right, key)
-        root.h = 1 + max(self.Height(root.left),self.Height(root.right))
+            node.right = self.insert(node.right, data)
+        node.h = 1 + max(self.Height(node.left),self.Height(node.right))
         
-        b = self.Balance(root)
-        if b > 1 and key < root.left.data:
-            return self.rightRotate(root)
-        if b < -1 and key > root.right.data:
-            return self.leftRotate(root)
-        if b > 1 and key > root.left.data:
-            root.left = self.lefttRotate(root.left)
-            return self.rightRotate(root)
-        if b < -1 and key < root.right.data:
-            root.right = self.rightRotate(root.right)
-            return self.leftRotate(root)
-        return root
+        b = self.Balance(node)
+        if b > 1 and data < node.left.data:
+            return self.rightRotate(node)
+        if b < -1 and data > node.right.data:
+            return self.leftRotate(node)
+        if b > 1 and data > node.left.data:
+            node.left = self.lefttRotate(node.left)
+            return self.rightRotate(node)
+        if b < -1 and data < node.right.data:
+            node.right = self.rightRotate(node.right)
+            return self.leftRotate(node)
+        return node
     
     def leftRotate(self, z):
         y = z.right
