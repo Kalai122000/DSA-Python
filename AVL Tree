@@ -62,16 +62,10 @@ class AVLTree(object):
             return 0
         return self.Height(node.left) - self.Height(node.right)
     
-    def Inorder(self, root):
+    def display(self, root):
         if root is not None:
             self.Inorder(root.left)
             print(root.data,end=" ")
-            self.Inorder(root.right)
-    def preorder(self, root):
-        if root is not None:
-            
-            print(root.data,end=" ")
-            self.Inorder(root.left)
             self.Inorder(root.right)
         
 T1 = AVLTree()
@@ -84,7 +78,5 @@ T1.insert(root, 150)
 T1.insert(root, 85)
 T1.insert(root, 175)
 T1.insert(root, 95)
-print("Inorder : ")
-T1.Inorder(root)
-print("\nPreorder:")
-T1.preorder(root)
+print("Tree : ")
+T1.display(root)
