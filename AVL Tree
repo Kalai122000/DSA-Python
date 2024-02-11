@@ -15,9 +15,9 @@ class AVLTree(object):
             root.left = self.insert(root.left, key)
         else:
             root.right = self.insert(root.right, key)
-        root.h = 1 + max(self.getHeight(root.left),self.getHeight(root.right))
+        root.h = 1 + max(self.Height(root.left),self.Height(root.right))
         
-        b = self.getBalance(root)
+        b = self.Balance(root)
         if b > 1 and key < root.left.data:
             return self.rightRotate(root)
         if b < -1 and key > root.right.data:
@@ -35,8 +35,8 @@ class AVLTree(object):
         T2 = y.left
         y.left = z
         z.right = T2
-        z.height = 1 + max(self.getHeight(z.left),self.getHeight(z.right))
-        y.height = 1 + max(self.getHeight(y.left),self.getHeight(y.right))
+        z.height = 1 + max(self.Height(z.left),self.Height(z.right))
+        y.height = 1 + max(self.Height(y.left),self.Height(y.right))
         return y
     
     def rightRotate(self, z):
@@ -44,19 +44,19 @@ class AVLTree(object):
         T3 = y.right
         y.right = z
         z.left = T3
-        z.height = 1 + max(self.getHeight(z.left),self.getHeight(z.right))
-        y.height = 1 + max(self.getHeight(y.left),self.getHeight(y.right))
+        z.height = 1 + max(self.Height(z.left),self.Height(z.right))
+        y.height = 1 + max(self.Height(y.left),self.Height(y.right))
         return y
     
-    def getHeight(self, root):
+    def Height(self, root):
         if not root:
             return 0
         return root.height
     
-    def getBalance(self, root):
+    def Balance(self, root):
         if not root:
             return 0
-        return self.getHeight(root.left) - self.getHeight(root.right)
+        return self.Height(root.left) - self.Height(root.right)
     
     def Inorder(self, root):
         if root is not None:
