@@ -20,14 +20,18 @@ class AVLTree(object):
         b = self.Balance(node)
         if b > 1 and data < node.left.data:
             return self.rightRotate(node)
+        
         if b < -1 and data > node.right.data:
             return self.leftRotate(node)
+        
         if b > 1 and data > node.left.data:
-            node.left = self.lefttRotate(node.left)
+            node.left = self.leftRotate(node.left)
             return self.rightRotate(node)
+        
         if b < -1 and data < node.right.data:
             node.right = self.rightRotate(node.right)
             return self.leftRotate(node)
+        
         return node
     
     def leftRotate(self, z):
@@ -73,5 +77,6 @@ T1.insert(root, 50)
 T1.insert(root, 60)
 T1.insert(root, 40)
 T1.insert(root, 70)
+T1.insert(root, 80)
 print("Inorder : ")
 T1.Inorder(root)
