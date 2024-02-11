@@ -53,12 +53,12 @@ class AVLTree(object):
         return y
     
     def Height(self, root):
-        if not root:
+        if root is None:
             return 0
         return root.height
     
     def Balance(self, root):
-        if not root:
+        if root is None:
             return 0
         return self.Height(root.left) - self.Height(root.right)
     
