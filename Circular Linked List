@@ -1,0 +1,120 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+class CircularLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def append(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            self.tail = new_node
+            new_node.next = new_node
+            new_node.prev = new_node
+        else:
+            new_node.prev = self.tail
+            new_node.next = self.head
+            self.tail.next = new_node
+            self.head.prev = new_node
+            self.tail = new_node
+
+    def prepend(self, data):
+        new_node = Node(data)
+        if self.head:
+            new_node.next = self.head
+            new_node.prev = self.tail
+            self.head.prev = new_node
+            self.tail.next = new_node
+            self.head = new_node
+        else:
+            self.head = new_node
+            self.tail = new_node
+            new_node.next = new_node
+            new_node.prev = new_node
+
+    def insert_end(self, data):
+        self.append(data)
+
+    def delete_begin(self):
+        if self.head:
+            self.head = self.head.next
+            self.head.prev = self.tail
+            self.tail.next = self.head
+
+    def insert_at_position(self, data, position):
+        new_node = Node(data)
+        if position <= 0:
+            self.prepend(data)
+        else:
+            current = self.head
+            for _ in range(position - 1):
+                if current is None:
+                    print("Invalid position")
+                    self.append(data)
+                    return
+                current = current.next
+
+            new_node.prev = current
+            new_node.next = current.next
+            current.next.prev = new_node
+            current.next = new_node
+
+    def delete_end(self):
+        if self.head:
+            if self.head == self.tail:
+                self.head = None
+                self.tail = None
+            else:
+                self.tail = self.tail.prev
+                self.tail.next = self.head
+                self.head.prev = self.tail
+
+    def display(self):
+        if self.head is None:
+            print("Is empty.")
+        else:
+            temp = self.head
+            while True:
+                print(temp.data, "<-->", end=" ")
+                temp = temp.next
+                if temp == self.head:
+                    break
+            print("Head")
+
+cll = CircularLinkedList()
+n = int(input())
+for i in range(n):
+    data = int(input())
+    cll.append(data)
+
+print("Circular Linked List:")
+cll.display()
+
+k = int(input())
+cll.prepend(k)
+print("After prepending:")
+cll.display()
+
+m = int(input())
+cll.insert_end(m)
+print("Inserting at the end:")
+cll.display()
+
+cll.delete_begin()
+print("Deleting from the beginning:")
+cll.display()
+
+cll.delete_end()
+print("Deleting from the end:")
+cll.display()
+
+h = int(input())
+pos = int(input())
+cll.insert_at_position(h, pos)
+print("Inserting at position {}: ".format(pos))
+cll.display()
