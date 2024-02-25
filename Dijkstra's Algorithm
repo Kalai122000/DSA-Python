@@ -1,0 +1,27 @@
+import heapq
+def dijkstra(graph, s):
+    d = {node: float('infinity') for node in graph}
+    d[s] = 0
+    q = [(0, s)]
+    
+    while q:
+        cost, node = heapq.heappop(q)
+        if cost > d[node]:
+            continue
+        for i, w in graph[node].items():
+            total = cost + w
+
+            if total < d[i]:
+                d[i] = total
+                heapq.heappush(q, (total,i))
+    return d
+graph = {
+    'A': {'B': 5, 'C': 3},
+    'B': {'E': 6, 'C': 2},
+    'C': {'E': 1},
+    'E': {'F': 4},
+    'F': {}
+}
+source = 'A'
+result = dijkstra(graph, source)
+print(result)
