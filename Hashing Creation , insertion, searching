@@ -1,28 +1,27 @@
 class HashTable:
     def __init__(self, n):
         self.n = n
-        self.table = [[] for i in range(n)]
+        self.table = [[] for _ in range(n)]
 
     def create(self, data):
         return data % self.n
 
     def insert(self, data):
         m = self.create(data)
-        self.table[m].append((data))
+        self.table[m].append(data)
 
     def display(self):
-        #index = self.create(data)
-        for i in self.table:
-            print(i)
-            
-    def search(self,key):
+        for i in range(len(self.table)):
+            print(f'Index {i}: {self.table[i]}')
+
+    def search(self, key):
         m = self.create(key)
         for k in self.table[m]:
             if k == key:
                 return True
         return False
 
-list1 = [15, 25, 35, 45, 55,49]  
+list1 = [15, 25, 35, 45, 55, 49]  
 h = HashTable(7)  
 for i in list1:
     h.insert(i)
@@ -30,7 +29,7 @@ for i in list1:
 h.display()
 
 k = 35
-if (h.search(k)):
-    print(k,"is Found")
+if h.search(k):
+    print(k, "is found")
 else:
-    print(k,"is not Found")
+    print(k, "is not found")
