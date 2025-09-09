@@ -1,0 +1,307 @@
+class Node:
+    def __init__(self, val):
+        self.data = val
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+    
+    def insert_end(self, val):
+        newnode = Node(val)
+        
+        if self.head is None:
+            self.head = newnode
+        else:
+            temp = self.head
+            while temp.next is not None:
+                temp = temp.next
+            temp.next = newnode
+    
+    def min(self):
+        if self.head is None:
+            print("List is empty!")
+            return
+        
+        min_val = self.head.data
+        temp = self.head
+        while temp is not None:
+            if min_val > temp.data:
+                min_val = temp.data
+            temp = temp.next
+        print("Min IN LIST:", min_val)
+    
+    def max(self):
+        if self.head is None:
+            print("List is empty!")
+            return
+        
+        max_val = self.head.data
+        temp = self.head
+        while temp is not None:
+            if max_val < temp.data:
+                max_val = temp.data
+            temp = temp.next
+        print("MAX IN LIST:", max_val)
+    
+    def search(self, a):
+        temp = self.head
+        found = False
+        
+        while temp is not None:
+            if temp.data == a:
+                found = True
+                break
+            temp = temp.next
+        
+        if found:
+            print("The element is found")
+        else:
+            print("Not found")
+    
+    def reverse(self):
+        prev = None
+        current = self.head
+        
+        while current is not None:
+            next_node = current.next
+            current.next = prev
+            prev = current
+            current = next_node
+        
+        self.head = prev
+    
+    def sort(self):
+        if self.head is None or self.head.next is None:
+            return
+        
+        curr = self.head
+        while curr is not None:
+            index = curr.next
+            while index is not None:
+                if curr.data > index.data:
+                    # Swap data
+                    temp = curr.data
+                    curr.data = index.data
+                    index.data = temp
+                index = index.next
+            curr = curr.next
+    
+    def delete_begin(self):
+        if self.head is None:
+            print("List is empty!")
+            return
+        
+        self.head = self.head.next
+    
+    def delete_position(self, d):
+        if self.head is None:
+            print("List is empty!")
+            return
+        
+        if d < 1:
+            print("Invalid position!")
+            return
+        
+        if d == 1:
+            self.delete_begin()
+            return
+        
+        temp = self.head
+        prev = None
+        
+        for i in range(1, d):
+            if temp is None:
+                print("Position out of range!")
+                return
+            prev = temp
+            temp = temp.next
+        
+        if temp is None:
+            print("Position out of range!")
+            return
+        
+        prev.next = temp.next
+    
+    def del_val(self, val):
+        if self.head is None:
+            print("List is empty!")
+            return
+        
+        if self.head.data == val:
+            self.head = self.head.next
+            return
+        
+        temp = self.head
+        found = False
+        
+        while temp.next is not None:
+            if temp.next.data == val:
+                found = True
+                break
+            temp = temp.next
+        
+        if not found:
+            print("Element not found")
+            return
+        
+        temp.next = temp.next.next
+    
+    def delete_end(self):
+        if self.head is None:
+            print("List is empty!")
+            return
+        
+        if self.head.next is None:
+            self.head = None
+            return
+        
+        current = self.head
+        while current.next.next is not None:
+            current = current.next
+        
+        current.next = None
+    
+    def insert_begin(self, val):
+        newnode = Node(val)
+        
+        if self.head is None:
+            self.head = newnode
+        else:
+            newnode.next = self.head
+            self.head = newnode
+    
+    def insert_position(self, pos, val):
+        if pos < 1:
+            print("Invalid position!")
+            return
+        
+        if pos == 1:
+            self.insert_begin(val)
+            return
+        
+        newnode = Node(val)
+        temp = self.head
+        
+        for i in range(1, pos - 1):
+            if temp is None:
+                print("Position out of range!")
+                return
+            temp = temp.next
+        
+        if temp is None:
+            print("Position out of range!")
+            return
+        
+        newnode.next = temp.next
+        temp.next = newnode
+    
+    def duplicate(self):
+        if self.head is None or self.head.next is None:
+            return
+        
+        current = self.head
+        
+        while current is not None and current.next is not None:
+            if current.data == current.next.data:
+                current.next = current.next.next
+            else:
+                current = current.next
+    
+    def display(self):
+        if self.head is None:
+            print("List is empty!")
+            return
+        
+        temp = self.head
+        while temp is not None:
+            print(temp.data, end="-->")
+            temp = temp.next
+        print("Null")
+
+def main():
+    linked_list = LinkedList()
+    
+    # Input number of elements
+    m = int(input("No of elements to add: "))
+    print(f"Enter {m} values:")
+    for i in range(m):
+        val = int(input())
+        linked_list.insert_end(val)
+    
+    print("Actual LinkedList:")
+    linked_list.display()
+    print()
+    
+    # Insert at beginning
+    a = int(input("The element to add at beginning: "))
+    linked_list.insert_begin(a)
+    linked_list.display()
+    print()
+    
+    # Insert at position
+    b = int(input("The element to add: "))
+    c = int(input("The position to add it: "))
+    linked_list.insert_position(c, b)
+    linked_list.display()
+    print()
+    
+    # Insert at end
+    z = int(input("The element to add at end: "))
+    linked_list.insert_end(z)
+    linked_list.display()
+    print()
+    
+    # Delete from beginning
+    print("First element deleted:")
+    linked_list.delete_begin()
+    linked_list.display()
+    print()
+    
+    # Delete at position
+    pos = int(input("The pos to delete: "))
+    linked_list.delete_position(pos)
+    linked_list.display()
+    print()
+    
+    # Delete from end
+    print("Last element deleted:")
+    linked_list.delete_end()
+    linked_list.display()
+    print()
+    
+    # Delete by value
+    p = int(input("The element to delete: "))
+    linked_list.del_val(p)
+    
+    # Sort the list
+    linked_list.sort()
+    linked_list.display()
+    print()
+    
+    # Find minimum
+    linked_list.min()
+    print()
+    
+    # Find maximum
+    linked_list.max()
+    print()
+    
+    # Search for element
+    val = int(input("The element to search: "))
+    linked_list.search(val)
+    print()
+    
+    # Reverse the list
+    print("Reverse:")
+    linked_list.reverse()
+    linked_list.display()
+    print()
+    
+    # Remove duplicates
+    print("Duplicate element deleted:")
+    linked_list.duplicate()
+    linked_list.display()
+
+if __name__ == "__main__":
+    main()
