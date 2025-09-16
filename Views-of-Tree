@@ -1,0 +1,131 @@
+from collections import deque
+from collections import defaultdict
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+        self.height = 0
+        self.hd = 0   
+
+
+class Tree:
+    def create(self, data):
+        return Node(data)
+
+    def insert(self, root, data):
+        if root is None:
+            return self.create(data)
+        if data < root.data:
+            root.left = self.insert(root.left, data)
+        else:
+            root.right = self.insert(root.right, data)
+        return root
+
+    def top_view(self, root):
+        if not root:
+            return
+        t = {}
+        q = deque([root])
+
+        while q:
+            temp = q.popleft()
+            h = temp.height
+
+            if h not in t:
+                t[h] = temp.data
+
+            if temp.left:
+                temp.left.height = h - 1
+                q.append(temp.left)
+            if temp.right:
+                temp.right.height = h + 1
+                q.append(temp.right)
+
+        for val in sorted(t.keys()):
+            print(t[val], end=" ")
+        print()
+
+    def left_view(self, root):
+        if not root:
+            return
+
+        q = deque([root])
+        while q:
+            size = len(q)
+            for i in range(size):
+                current = q.popleft()
+                if i == 0:
+                    print(current.data, end=" ")
+                if current.left:
+                    q.append(current.left)
+                if current.right:
+                    q.append(current.right)
+        print()
+
+    def right_view(self, root):
+        if not root:
+            return
+
+        q = deque([root])
+        while q:
+            size = len(q)
+            for i in range(size):
+                current = q.popleft()
+                if i == size - 1:
+                    print(current.data, end=" ")
+                if current.left:
+                    q.append(current.left)
+                if current.right:
+                    q.append(current.right)
+        print()
+
+    def bottom_view(self, root):
+        if not root:
+            return
+
+        m = {}
+        q = deque()
+        root.hd = 0
+        q.append(root)
+
+        while q:
+            current = q.popleft()
+            hd = current.hd
+            m[hd] = current.data
+
+            if current.left:
+                current.left.hd = hd - 1
+                q.append(current.left)
+            if current.right:
+                current.right.hd = hd + 1
+                q.append(current.right)
+
+        for val in sorted(m.keys()):
+            print(m[val], end=" ")
+        print()
+
+
+if __name__ == "__main__":
+    t1 = Tree()
+    root = t1.create(10)
+
+    t1.insert(root, 20)
+    t1.insert(root, 25)
+    t1.insert(root, 15)
+    t1.insert(root, 7)
+    t1.insert(root, 5)
+    t1.insert(root, 9)
+
+    print("\nTop View:")
+    t1.top_view(root)
+
+    print("Left View:")
+    t1.left_view(root)
+
+    print("Right View:")
+    t1.right_view(root)
+
+    print("Bottom View:")
+    t1.bottom_view(root)
