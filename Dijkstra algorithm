@@ -9,7 +9,7 @@ class Graph:
             self.adj_list[vertex] = []
 
     def add_edge(self, u, v, weight):
-        # Undirected weighted edge
+    
         if u not in self.adj_list:
             self.add_vertex(u)
         if v not in self.adj_list:
@@ -30,8 +30,6 @@ class Graph:
 
         while priority_queue:
             current_dist, current_vertex = heapq.heappop(priority_queue)
-
-            # Skip if we've already found a better path
             if current_dist > distances[current_vertex]:
                 continue
 
