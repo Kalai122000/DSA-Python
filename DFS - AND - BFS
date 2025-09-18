@@ -1,0 +1,62 @@
+from collections import deque
+
+class Graph:
+    def __init__(self):
+        self.adj_list = {}
+
+    def add_vertex(self, vertex):
+        if vertex not in self.adj_list:
+            self.adj_list[vertex] = []
+
+    def add_edge(self, u, v):
+        
+        if u not in self.adj_list:
+            self.add_vertex(u)
+        if v not in self.adj_list:
+            self.add_vertex(v)
+
+        self.adj_list[u].append(v)
+        self.adj_list[v].append(u)
+
+    def display(self):
+        for vertex in self.adj_list:
+            print(f"{vertex}: {self.adj_list[vertex]}")
+
+    def dfs(self, start, visited=None):
+        if visited is None:
+            visited = set()
+        visited.add(start)
+        print(start, end=' ')
+        for neighbor in self.adj_list[start]:
+            if neighbor not in visited:
+                self.dfs(neighbor, visited)
+
+    def bfs(self, start):
+        visited = set()
+        queue = deque([start])
+        visited.add(start)
+
+        while queue:
+            vertex = queue.popleft()
+            print(vertex, end=' ')
+            for neighbor in self.adj_list[vertex]:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append(neighbor)
+
+
+g = Graph()
+g.add_edge("A", "B")
+g.add_edge("A", "C")
+g.add_edge("B", "D")
+g.add_edge("C", "D")
+g.add_edge("D", "E")
+
+print("Adjacency List:")
+g.display()
+
+print("\nDFS Traversal starting from A:")
+g.dfs("A")
+
+print("\n\nBFS Traversal starting from A:")
+g.bfs("A")
