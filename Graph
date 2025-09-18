@@ -1,0 +1,64 @@
+class Graph:
+    def __init__(self):
+        self.adj_list = {}
+
+    def add_vertex(self, vertex):
+        if vertex not in self.adj_list:
+            self.adj_list[vertex] = []
+
+    def add_edge(self, u, v):
+        
+        if u not in self.adj_list:
+            self.add_vertex(u)
+        if v not in self.adj_list:
+            self.add_vertex(v)
+
+        self.adj_list[u].append(v)
+        self.adj_list[v].append(u)
+
+    def display(self):
+        for vertex in self.adj_list:
+            print(f"{vertex}: {self.adj_list[vertex]}")
+
+g = Graph()
+g.add_edge("A", "B")
+g.add_edge("A", "C")
+g.add_edge("B", "D")
+g.add_edge("C", "D")
+g.add_edge("D", "E")
+
+g.display()
+
+
+
+
+
+class Graph:
+    def __init__(self, vertices):
+        self.vertices = vertices 
+        self.size = len(vertices)
+        self.vertex_indices = {vertex: index for index, vertex in enumerate(vertices)}
+        self.adj_matrix = [[0] * self.size for _ in range(self.size)]
+
+    def add_edge(self, u, v):
+        i = self.vertex_indices[u]
+        j = self.vertex_indices[v]
+        self.adj_matrix[i][j] = 1
+        self.adj_matrix[j][i] = 1  
+
+    def display(self):
+        print("  ", " ".join(self.vertices))
+        for i in range(self.size):
+            print(self.vertices[i], self.adj_matrix[i])
+
+
+vertices = ["A", "B", "C", "D", "E"]
+g = Graph(vertices)
+g.add_edge("A", "B")
+g.add_edge("A", "C")
+g.add_edge("B", "D")
+g.add_edge("C", "D")
+g.add_edge("D", "E")
+
+g.display()
+
